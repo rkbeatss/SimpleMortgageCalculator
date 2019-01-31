@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.content.Intent;
 import org.w3c.dom.Text;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText principal, interest, amort;
@@ -27,16 +29,33 @@ public class MainActivity extends AppCompatActivity {
         interest = (EditText)findViewById(R.id.editInterest);
         amort = (EditText)findViewById(R.id.editAmort);
 
-
-
-
+        //Calculate Button
         Button calculateButton = (Button) findViewById(R.id.btCalculate);
         calculateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
+                calculateMortagePayment();
                 goToSummary();
+
             }
         });
 
+        //Settings Button
+        Button settingsButton = (Button) findViewById(R.id.btSettings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                goToSettings();
+
+            }
+        });
+
+        //Help Button
+        Button helpButton = (Button) findViewById(R.id.btHelp);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                goToHelp();
+
+            }
+        });
 
     }
 
@@ -49,15 +68,22 @@ public class MainActivity extends AppCompatActivity {
         double n = (12*entAmort);
 
         mortgagePayment = entPrincipal * ((r*(Math.pow(1+r,n)))/((Math.pow(1+r,n)) -1));
-
-
     }
 
 
-
     protected void goToSummary(){
-        Intent myIntent = new Intent(MainActivity.this, SummaryActivity.class);
-        myIntent.putExtra("Mortgage_Payment", mortgagePayment);
-        startActivity(myIntent);
+        Intent intentSummary = new Intent(MainActivity.this, SummaryActivity.class);
+        intentSummary.putExtra("Mortgage_Payment", mortgagePayment);
+        startActivity(intentSummary);
+    }
+
+    protected void goToSettings(){
+        Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intentSettings);
+    }
+
+    protected void goToHelp(){
+        Intent intentHelp = new Intent(MainActivity.this, HelpActivity.class);
+        startActivity(intentHelp);
     }
 }

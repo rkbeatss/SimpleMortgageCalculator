@@ -10,7 +10,6 @@ public class SummaryActivity extends AppCompatActivity {
 
     private TextView result;
 
-    String mortgagePayment = getIntent().getStringExtra("Mortgage_Payment");
 
     //MainActivity main = new MainActivity();
 
@@ -19,9 +18,15 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
+        Bundle extras = getIntent().getExtras();
+        double mortgagePayment = extras.getDouble("Mortgage_Payment");
 
-        //result = (TextView)findViewById(R.id.summaryResult);
+        System.out.print("i made it");
 
-        //result.setText("Your monthly mortgage payment is:" + new DecimalFormat("##.##").format(mortgagePayment));
+        result = (TextView)findViewById(R.id.summaryResult);
+
+        result.setText("Your monthly mortgage payment is: $" + new DecimalFormat("##.##").format(mortgagePayment));
+
     }
+
 }
