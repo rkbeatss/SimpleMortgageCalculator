@@ -60,6 +60,7 @@
 
     <Spinner
         android:id="@+id/settingsCurSpinner"
+        android:entries="@array/currency"
         android:layout_width="318dp"
         android:layout_height="43dp"
         android:layout_marginStart="8dp"
@@ -78,6 +79,7 @@
 
     <Spinner
         android:id="@+id/settingsFreqSpinner"
+        android:entries="@array/frequency"
         android:layout_width="318dp"
         android:layout_height="43dp"
         android:layout_marginStart="8dp"

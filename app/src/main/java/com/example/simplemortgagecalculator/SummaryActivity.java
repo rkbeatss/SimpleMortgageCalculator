@@ -21,8 +21,6 @@ public class SummaryActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         double mortgagePayment = extras.getDouble("Mortgage_Payment");
 
-        System.out.print("i made it");
-
         result = (TextView)findViewById(R.id.summaryResult);
 
         result.setText("Your monthly mortgage payment is: $" + new DecimalFormat("##.##").format(mortgagePayment));
