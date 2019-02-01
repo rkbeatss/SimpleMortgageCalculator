@@ -3,4 +3,17 @@
     <string name="calculate">Calculate</string>
     <string name="principal">Principal</string>
     <string name="interest">Interest</string>
+
+    <string-array name="currency">
+        <item>Dollar</item>
+        <item>Euro</item>
+        <item>Pound</item>
+    </string-array>
+
+    <string-array name="frequency">
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Bi-Weekly</item>
+    </string-array>
+
 </resources>

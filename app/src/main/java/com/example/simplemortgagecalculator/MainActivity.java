@@ -13,9 +13,9 @@ import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView errorText;
     private EditText principal, interest, amort;
-    double mortgagePayment;
+    double mortgagePayment, entPrincipal, entInterest, entAmort, r, n;
 
 
     @Override
@@ -23,18 +23,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //Input Edittext :Principle, Interest, Amortization
         principal = (EditText)findViewById(R.id.editPrinciple);
         interest = (EditText)findViewById(R.id.editInterest);
         amort = (EditText)findViewById(R.id.editAmort);
 
+        //Error Field
+        errorText = (TextView)findViewById(R.id.mainError);
+
         //Calculate Button
         Button calculateButton = (Button) findViewById(R.id.btCalculate);
         calculateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                calculateMortagePayment();
-                goToSummary();
+                try{
+                    calculateMortagePayment();
+                    goToSummary();
+                    errorText.setText("");
+                }
+                catch (NumberFormatException e){
+                    errorText.setText("");
+                    validation();
+                }
+
 
             }
         });
@@ -60,15 +70,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculateMortagePayment(){
-        double entPrincipal = Integer.parseInt(principal.getText().toString());
-        double entInterest = Integer.parseInt(interest.getText().toString());
-        double entAmort = Integer.parseInt(amort.getText().toString());
+        entPrincipal = Integer.parseInt(principal.getText().toString());
+        entInterest = Integer.parseInt(interest.getText().toString());
+        entAmort = Integer.parseInt(amort.getText().toString());
 
-        double r = (entInterest/100)/12;
-        double n = (12*entAmort);
+        r = (entInterest/100)/12;
+        n = (12*entAmort);
 
         mortgagePayment = entPrincipal * ((r*(Math.pow(1+r,n)))/((Math.pow(1+r,n)) -1));
     }
+
+    public void validation(){
+
+        String valiPrinciple = principal.getText().toString();
+        String valiInterest = interest.getText().toString();
+        String valiAmort = amort.getText().toString();
+
+        //Validate Principle
+        if(valiPrinciple.isEmpty() || valiPrinciple.length() == 0 || valiPrinciple.equals("") || valiPrinciple == null){
+            errorText.setText("The principle field cannot be empty.");
+        }
+
+        //Validate Interest
+        else if(valiInterest.isEmpty() || valiInterest.length() == 0 || valiInterest.equals("") || valiInterest == null){
+            errorText.setText("The interest field cannot be empty.");
+        }
+
+        //Validate Amort
+        else if(valiAmort.isEmpty() || valiAmort.length() == 0 || valiAmort.equals("") || valiAmort == null) {
+            errorText.setText("The amortization field cannot be empty.");
+
+        }
+
+    }
+
 
 
     protected void goToSummary(){
