@@ -15,5 +15,8 @@
         <item>Weekly</item>
         <item>Bi-Weekly</item>
     </string-array>
-
+    <string name="helpContent">
+        More Details Page \n
+        How your mortgage is calculated:
+    </string>
 </resources>
