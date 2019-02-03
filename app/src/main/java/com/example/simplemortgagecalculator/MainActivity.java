@@ -15,8 +15,10 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
     TextView errorText;
     private EditText principal, interest, amort;
-    double mortgagePayment, entPrincipal, entInterest, entAmort, r, n;
-    String currencyType = "Dollar", frequencyType = "Monthly";
+    public static double mortgagePayment;
+
+    double entPrincipal, entInterest, entAmort, r, n;
+    String currencyType , frequencyType;
 
 
 
@@ -33,17 +35,11 @@ public class MainActivity extends AppCompatActivity {
         //Error Field
         errorText = (TextView)findViewById(R.id.mainError);
 
-        //Get currency and frequency from settings page
-        Bundle extras = getIntent().getExtras();
-        try{
-            //currencyType = extras.getString("currencyType");
-            //frequencyType = extras.getString("frequencyType");
-        }
-        catch(NullPointerException e){
-            e.printStackTrace();
-            System.out.println(currencyType);
-            System.out.println(frequencyType);
-        }
+        avoidNullCurAndFreq();
+
+        System.out.println("STARTUP"+currencyType);
+        System.out.println("STARTUP"+frequencyType);
+
 
 
         //Calculate Button
@@ -54,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
                     calculateMortagePayment();
                     goToSummary();
                     errorText.setText("");
+                    System.out.println("NORMAL"+currencyType);
+                    System.out.println("NORMAL"+frequencyType);
                 }
                 catch (NumberFormatException e){
                     errorText.setText("");
                     validation();
-                    System.out.println(currencyType);
-                    System.out.println(frequencyType);
                 }
 
 
@@ -84,17 +80,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void avoidNullCurAndFreq(){
+
+        try{
+
+            currencyType = SettingsActivity.currencyType;
+            frequencyType = SettingsActivity.frequencyType;
+
+            System.out.println("GOT NEW CURR"+currencyType);
+            System.out.println("GOT NEW FREQ"+frequencyType);
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+
+            currencyType = "Dollar";
+            frequencyType = "Monthly";
+
+            System.out.println("ERROR"+ currencyType);
+            System.out.println("ERROR"+ frequencyType);
+        }
+
+
+    }
+
     public void calculateMortagePayment(){
         entPrincipal = Double.parseDouble(principal.getText().toString());
         entInterest = Double.parseDouble(interest.getText().toString());
         entAmort = Double.parseDouble(amort.getText().toString());
 
         // Frequency Type Conversion
-        if(frequencyType == "Weekly"){
+        if(frequencyType.equals("Weekly")){
             r = (entInterest/100)/48;
             n = (48*entAmort);
         }
-        else if(frequencyType == "Bi-Weekly"){
+        else if(frequencyType.equals("Bi-Weekly")){
             r = (entInterest/100)/24;
             n = (24*entAmort);
         }
@@ -105,12 +124,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Currency Type conversion
 
-        if(currencyType == "Euro"){
+        if(currencyType.equals("Euro")){
             entPrincipal = entPrincipal * 0.87; // USD TO EURO conversion rate as of 2/3/2019
         }
-        else if (currencyType == "Pound") {
+        else if (currencyType.equals("Pound")) {
             entPrincipal = entPrincipal * 0.76; // USD TO GBP conversion rate as of 2/3/2019
         }
+
+        System.out.println("CALCULATING USING: "+currencyType);
+        System.out.println("CALCULATING USING: "+frequencyType);
 
         mortgagePayment = entPrincipal * ((r*(Math.pow(1+r,n)))/((Math.pow(1+r,n)) -1));
     }

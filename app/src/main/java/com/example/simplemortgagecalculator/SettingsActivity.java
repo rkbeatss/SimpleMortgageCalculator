@@ -21,8 +21,8 @@ public class SettingsActivity extends AppCompatActivity  {
     RadioGroup radioGroupFrequency;
     RadioButton radioButtonFrequency;
 
-    String currencyType;
-    String frequencyType;
+    public static String currencyType ="Dollar" ;
+    public static String frequencyType ="Monthly" ;
 
 
     @Override
@@ -37,57 +37,15 @@ public class SettingsActivity extends AppCompatActivity  {
         apply.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //System.out.println(currencyType);
-                //System.out.println(frequencyType);
                 goToMain();
             }
         });
-
-//        //Currency Spinner
-//        Spinner currency = findViewById(R.id.settingsCurSpinner);
-//        ArrayAdapter<CharSequence> adapterCur = ArrayAdapter.createFromResource(this,R.array.currency, android.R.layout.simple_spinner_item);
-//        adapterCur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        currency.setAdapter(adapterCur);
-//        currency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String text = adapterView.getItemAtPosition(i).toString();
-//                Toast.makeText(adapterView.getContext(),text, Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//
-//        //Pay Frequency Spinner
-//        Spinner frequency = findViewById(R.id.settingsFreqSpinner);
-//        ArrayAdapter<CharSequence> adapterFreq = ArrayAdapter.createFromResource(this,R.array.frequency, android.R.layout.simple_spinner_item);
-//        adapterFreq.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        frequency.setAdapter(adapterFreq);
-//        frequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String text = adapterView.getItemAtPosition(i).toString();
-//                Toast.makeText(adapterView.getContext(),text, Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
 
     }
 
     public void checkCurrency(View v){
         int radioCurId = radioGroupCurrency.getCheckedRadioButtonId();
         radioButtonCurrency = findViewById(radioCurId);
-
-       // currencyType =
 
         currencyType = radioButtonCurrency.getText().toString();
 
@@ -106,16 +64,6 @@ public class SettingsActivity extends AppCompatActivity  {
 
     protected void goToMain(){
         Intent intentMain = new Intent(SettingsActivity.this, MainActivity.class);
-
-        Bundle bundle = new Bundle();
-
-        bundle.putString("currencyType", currencyType);
-        bundle.putString("frequencyType",frequencyType);
-
-        intentMain.putExtras(bundle);
-
-        //intentMain.putExtra("currencyType", currencyType);
-        //intentMain.putExtra("frequencyType",frequencyType);
         startActivity(intentMain);
     }
 

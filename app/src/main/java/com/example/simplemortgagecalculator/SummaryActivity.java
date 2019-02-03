@@ -21,12 +21,11 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
-        Bundle extras = getIntent().getExtras();
-        double mortgagePayment = extras.getDouble("Mortgage_Payment");
-
+        double mortgagePayment = MainActivity.mortgagePayment;
         result = (TextView)findViewById(R.id.summaryResult);
 
-        result.setText("Your monthly mortgage payment is: $" + new DecimalFormat("##.##").format(mortgagePayment));
+        textAppender();
+        result.append(new DecimalFormat("##.##").format(mortgagePayment));
 
         Button btReturn = (Button) findViewById(R.id.btReturnToMain);
         btReturn.setOnClickListener(new View.OnClickListener() {
@@ -38,5 +37,28 @@ public class SummaryActivity extends AppCompatActivity {
     protected void returnToMain(){
         Intent intentMain = new Intent(SummaryActivity.this, MainActivity.class);
         startActivity(intentMain);
+    }
+
+    public void textAppender(){
+        if(SettingsActivity.frequencyType.equals("Weekly")){
+            result.append("Your weekly mortgage payment is: ");
+        }
+        else if(SettingsActivity.frequencyType.equals("Bi-Weekly")){
+            result.append("Your bi-weekly mortgage payment is: ");
+        }
+        else{
+            result.append("Your monthly mortgage payment is: ");
+        }
+
+        if(SettingsActivity.currencyType.equals("Euro")){
+            result.append("€");
+        }
+        else if(SettingsActivity.currencyType.equals("Pound")){
+            result.append("£");
+        }
+        else{
+            result.append("$");
+        }
+
     }
 }

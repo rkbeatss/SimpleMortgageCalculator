@@ -16,4 +16,27 @@
         <item>Bi-Weekly</item>
     </string-array>
 
+    <string name="howToUsePara">
+        Start by entering a principle amount in the principle field. A valid input can only consist of a non-negative number.
+        \n
+        \nNext, enter an interest rate. A valid input can only consist of a non-negative number.
+        \n
+        \nFinally, enter an amortization period in terms of years. A valid input can only consist of a non-negative, non-decimal number.
+        \n
+        \nThe application will generate your monthly mortgage payment on the following summary page after tapping the calculate button.
+        \n
+        \nThe currency and interest payment frequency can be changed in the settings page on the main menu.
+    </string>
+
+    <string name="howWasCalc">Your mortgage payment was calculated using the following formula, where:
+        \n<b>r</b> is the interest rate based on the selected payment frequency.
+        \n
+        \n<b>n</b> is the amortization period in years, multiplied by the selected payment frequency.
+        \n
+        \n<b>P</b> is the initial principle amount.
+        \n
+        \n<b>M</b> is the final mortgage payment you pay based on the interest and amortization period.
+
+    </string>
+
 </resources>
