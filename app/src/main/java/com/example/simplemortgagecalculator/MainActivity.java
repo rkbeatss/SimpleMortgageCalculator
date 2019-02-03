@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     TextView errorText;
     private EditText principal, interest, amort;
     double mortgagePayment, entPrincipal, entInterest, entAmort, r, n;
+    String currencyType = "Dollar", frequencyType = "Monthly";
+
 
 
     @Override
@@ -31,6 +33,19 @@ public class MainActivity extends AppCompatActivity {
         //Error Field
         errorText = (TextView)findViewById(R.id.mainError);
 
+        //Get currency and frequency from settings page
+        Bundle extras = getIntent().getExtras();
+        try{
+            //currencyType = extras.getString("currencyType");
+            //frequencyType = extras.getString("frequencyType");
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+            System.out.println(currencyType);
+            System.out.println(frequencyType);
+        }
+
+
         //Calculate Button
         Button calculateButton = (Button) findViewById(R.id.btCalculate);
         calculateButton.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
                 catch (NumberFormatException e){
                     errorText.setText("");
                     validation();
+                    System.out.println(currencyType);
+                    System.out.println(frequencyType);
                 }
 
 
@@ -54,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 goToSettings();
-
             }
         });
 
@@ -63,19 +79,38 @@ public class MainActivity extends AppCompatActivity {
         helpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 goToHelp();
-
             }
         });
 
     }
 
     public void calculateMortagePayment(){
-        entPrincipal = Integer.parseInt(principal.getText().toString());
-        entInterest = Integer.parseInt(interest.getText().toString());
-        entAmort = Integer.parseInt(amort.getText().toString());
+        entPrincipal = Double.parseDouble(principal.getText().toString());
+        entInterest = Double.parseDouble(interest.getText().toString());
+        entAmort = Double.parseDouble(amort.getText().toString());
 
-        r = (entInterest/100)/12;
-        n = (12*entAmort);
+        // Frequency Type Conversion
+        if(frequencyType == "Weekly"){
+            r = (entInterest/100)/48;
+            n = (48*entAmort);
+        }
+        else if(frequencyType == "Bi-Weekly"){
+            r = (entInterest/100)/24;
+            n = (24*entAmort);
+        }
+        else{
+            r = (entInterest/100)/12;
+            n = (12*entAmort);
+        }
+
+        //Currency Type conversion
+
+        if(currencyType == "Euro"){
+            entPrincipal = entPrincipal * 0.87; // USD TO EURO conversion rate as of 2/3/2019
+        }
+        else if (currencyType == "Pound") {
+            entPrincipal = entPrincipal * 0.76; // USD TO GBP conversion rate as of 2/3/2019
+        }
 
         mortgagePayment = entPrincipal * ((r*(Math.pow(1+r,n)))/((Math.pow(1+r,n)) -1));
     }
