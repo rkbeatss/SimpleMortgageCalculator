@@ -47,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
         calculateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 try{
-                    calculateMortagePayment();
-                    goToSummary();
                     errorText.setText("");
+                    boolean flag = validation();
+                    calculateMortagePayment();
+                    if (flag){
+                        goToSummary();
+                    }
                     System.out.println("NORMAL"+currencyType);
                     System.out.println("NORMAL"+frequencyType);
                 }
@@ -137,35 +140,34 @@ public class MainActivity extends AppCompatActivity {
         mortgagePayment = entPrincipal * ((r*(Math.pow(1+r,n)))/((Math.pow(1+r,n)) -1));
     }
 
-    public void validation(){
+    public boolean validation(){
 
         String valiPrinciple = principal.getText().toString();
         String valiInterest = interest.getText().toString();
         String valiAmort = amort.getText().toString();
 
         //Validate Principle
-        if(valiPrinciple.isEmpty() || valiPrinciple.length() == 0 || valiPrinciple.equals("") || valiPrinciple == null){
-            errorText.setText("The principle field cannot be empty.");
+        if(valiPrinciple.isEmpty() || valiPrinciple.length() == 0 || valiPrinciple.equals("") || valiPrinciple == null || valiPrinciple.equals("0")){
+            errorText.setText("The principle field cannot be empty or zero.");
         }
 
         //Validate Interest
-        else if(valiInterest.isEmpty() || valiInterest.length() == 0 || valiInterest.equals("") || valiInterest == null){
-            errorText.setText("The interest field cannot be empty.");
+        else if(valiInterest.isEmpty() || valiInterest.length() == 0 || valiInterest.equals("") || valiInterest == null || valiInterest.equals("0")){
+            errorText.setText("The interest field cannot be empty or zero.");
         }
 
         //Validate Amort
-        else if(valiAmort.isEmpty() || valiAmort.length() == 0 || valiAmort.equals("") || valiAmort == null) {
-            errorText.setText("The amortization field cannot be empty.");
-
+        else if(valiAmort.isEmpty() || valiAmort.length() == 0 || valiAmort.equals("") || valiAmort == null || valiAmort.equals("0")) {
+            errorText.setText("The amortization field cannot be empty or zero.");
         }
-
+        return (errorText.getText().equals(""));
     }
 
 
 
     protected void goToSummary(){
         Intent intentSummary = new Intent(MainActivity.this, SummaryActivity.class);
-        intentSummary.putExtra("Mortgage_Payment", mortgagePayment);
+        //intentSummary.putExtra("Mortgage_Payment", mortgagePayment);
         startActivity(intentSummary);
     }
 

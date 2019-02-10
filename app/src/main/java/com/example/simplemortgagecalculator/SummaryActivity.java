@@ -13,9 +13,6 @@ public class SummaryActivity extends AppCompatActivity {
 
     private TextView result;
 
-
-    //MainActivity main = new MainActivity();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
